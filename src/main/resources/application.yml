@@ -1,0 +1,39 @@
+spring:
+  application:
+    name: inotek-batch
+    version: 0.1.0 SNAPSHOT
+  batch:
+    job:
+      enabled: true
+    jdbc:
+      initialize-schema: ALWAYS
+      #Database configuration
+  datasource:
+    database: batchload
+    hostname: localhost
+    port: 5432
+    username: postgres
+    password: Anid2022
+    url: jdbc:postgresql://${spring.datasource.hostname}:${spring.datasource.port}/${spring.datasource.database}?useSSL=false&serverTimezone=UTC&useLegacyDatetime=false
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+      globally_quoted_identifiers: true
+    properties:
+      show_sql: true
+      jakarta:
+        persistence:
+          schema-generation:
+            scripts:
+              action: drop-and-create
+              create-source: metadata
+              drop-target: drop-and-create.sql
+              create-target: drop-and-create.sql
+  flyway:
+    clean-disabled: false
+  # Server config
+server:
+  port: 8181
+  shutdown: graceful
